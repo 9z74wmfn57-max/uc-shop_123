@@ -1,46 +1,148 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UC Shop</title>
-    <!-- Подключаем скрипт Telegram -->
-    <script src="https://telegram.org"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: var(--tg-theme-bg-color, #ffffff);
-            color: var(--tg-theme-text-color, #000000);
-            margin: 0;
-            padding: 20px;
-            text-align: center;
-        }
-        .shop-title {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-        .btn {
-            background-color: var(--tg-theme-button-color, #2481cc);
-            color: var(--tg-theme-button-text-color, #ffffff);
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>UC Shop</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700&family=Unbounded:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d1a3a; --card:#16264f; --card2:#1d3163; --line:#2a407a;
+  --gold:#ffc83d; --gold-d:#e0a400; --text:#f2f5ff; --mute:#9fb0dc; --bad:#ff7a7a;
+  --display:'Unbounded','Trebuchet MS',sans-serif; --body:'Manrope',system-ui,sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:var(--body);font-size:15px}
+body{padding:calc(env(safe-area-inset-top,0px) + 16px) 14px calc(env(safe-area-inset-bottom,0px) + 120px)}
+h1{font-family:var(--display);font-weight:800;font-size:22px;margin:0 0 4px;letter-spacing:-.01em}
+.sub{color:var(--mute);margin:0 0 18px}
+.steps{display:flex;gap:8px;margin:0 0 18px;padding:0;list-style:none}
+.steps li{flex:1;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 6px;text-align:center;font-size:12px;color:var(--mute)}
+.steps b{display:block;font-family:var(--display);color:var(--gold);font-size:15px}
+h2{font-family:var(--display);font-weight:600;font-size:15px;margin:0 0 10px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px}
+.pack{background:var(--card);border:1.5px solid var(--line);border-radius:18px;padding:14px 12px 12px;display:flex;flex-direction:column;gap:6px;transition:border-color .15s,background .15s}
+.pack.on{border-color:var(--gold);background:var(--card2)}
+.pack .em{font-size:34px;line-height:1}
+.pack .uc{font-family:var(--display);font-weight:800;font-size:20px}
+.pack .uc small{font-size:12px;color:var(--gold);font-weight:600;margin-left:3px}
+.pack .pr{color:var(--mute);font-weight:700}
+.step{display:flex;align-items:center;justify-content:space-between;margin-top:6px}
+.step button{width:40px;height:40px;border-radius:12px;border:0;background:var(--line);color:var(--text);font-size:22px;font-weight:700;font-family:var(--body)}
+.step button:active{background:var(--gold);color:#241a00}
+.step .n{font-family:var(--display);font-weight:800;font-size:17px;min-width:28px;text-align:center}
+.box{background:var(--card);border:1.5px solid var(--line);border-radius:18px;padding:14px;margin-bottom:22px}
+.box label{display:block;color:var(--mute);margin-bottom:8px}
+.box input{width:100%;font:700 18px var(--body);letter-spacing:.06em;color:var(--text);background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:13px 14px;outline:none}
+.box input:focus-visible{border-color:var(--gold)}
+.box input.err{border-color:var(--bad)}
+.hint{min-height:18px;margin:8px 2px 0;font-size:13px;color:var(--mute)}
+.hint.err{color:var(--bad)}
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:12px 14px calc(env(safe-area-inset-bottom,0px) + 12px);display:flex;align-items:center;gap:12px}
+.sum{flex:1;line-height:1.25}
+.sum .t{font-family:var(--display);font-weight:800;font-size:18px}
+.sum .u{color:var(--mute);font-size:13px}
+.go{border:0;border-radius:14px;background:var(--gold);color:#241a00;font:800 15px var(--body);padding:15px 20px}
+.go:disabled{background:var(--line);color:var(--mute)}
+.go:not(:disabled):active{background:var(--gold-d)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
 </head>
 <body>
+<h1 id="shop">💎 UC Shop</h1>
+<p class="sub">Пополнение UC для PUBG Mobile — быстро и безопасно 🔥</p>
 
-    <div class="shop-title">Приветствуем в UC Shop!</div>
-    <p>Это заготовка вашего мини-приложения.</p>
-    <button class="btn" onclick="tg.close()">Закрыть приложение</button>
+<ol class="steps">
+  <li><b>1</b>Выбери UC 💎</li>
+  <li><b>2</b>Введи ID 🎮</li>
+  <li><b>3</b>Отправь ⚡</li>
+</ol>
 
-    <script>
-        // Инициализируем Telegram WebApp
-        let tg = window.Telegram.WebApp;
-        tg.expand(); // Расширяем на весь экран
-    </script>
+<h2>💎 Выбери пак</h2>
+<div class="grid" id="grid"></div>
+
+<h2>🎮 Твой Player ID</h2>
+<div class="box">
+  <label for="pid">Цифры под ником в профиле игры</label>
+  <input id="pid" inputmode="numeric" autocomplete="off" maxlength="14" placeholder="5123456789">
+  <div class="hint" id="hint">UC придут именно на этот ID 🛡</div>
+</div>
+
+<div class="bar">
+  <div class="sum"><div class="t" id="total">0 ₽</div><div class="u" id="ucs">Выбери пак выше 👆</div></div>
+  <button class="go" id="go" disabled>Заказать 🚀</button>
+</div>
+
+<script>
+const tg = window.Telegram && window.Telegram.WebApp;
+if (tg) { tg.ready(); tg.expand(); try{ tg.MainButton.hide(); }catch(e){} }
+const qs = new URLSearchParams(location.search);
+const CUR = qs.get('c') || '₽';
+document.getElementById('shop').textContent = '💎 ' + (qs.get('s') || 'UC Shop');
+const EM = {60:'🪙',325:'💰',660:'💎',1800:'🔥',3850:'👑',8100:'🚀'};
+let packs = (qs.get('p') || '').split(',').filter(Boolean).map(x => {
+  const [id, uc, price] = x.split(':').map(Number); return {id, uc, price};
+}).filter(p => p.id && p.uc && p.price);
+if (!packs.length) packs = [{id:1,uc:60,price:79},{id:2,uc:325,price:399},{id:3,uc:660,price:799},{id:4,uc:1800,price:1999}];
+const qty = {};
+const fmt = n => n.toLocaleString('ru-RU').replace(/\u00a0/g,' ');
+const buzz = () => { try{ tg.HapticFeedback.impactOccurred('light'); }catch(e){} };
+
+const grid = document.getElementById('grid');
+packs.forEach(p => {
+  qty[p.id] = 0;
+  const el = document.createElement('div'); el.className = 'pack'; el.id = 'p' + p.id;
+  const em = document.createElement('div'); em.className = 'em'; em.textContent = EM[p.uc] || '💎';
+  const uc = document.createElement('div'); uc.className = 'uc'; uc.textContent = fmt(p.uc);
+  const sm = document.createElement('small'); sm.textContent = 'UC'; uc.appendChild(sm);
+  const pr = document.createElement('div'); pr.className = 'pr'; pr.textContent = fmt(p.price) + ' ' + CUR;
+  const st = document.createElement('div'); st.className = 'step';
+  const minus = document.createElement('button'); minus.textContent = '−'; minus.setAttribute('aria-label','Убрать');
+  const n = document.createElement('div'); n.className = 'n'; n.id = 'n' + p.id; n.textContent = '0';
+  const plus = document.createElement('button'); plus.textContent = '+'; plus.setAttribute('aria-label','Добавить');
+  minus.onclick = () => change(p.id, -1); plus.onclick = () => change(p.id, 1);
+  st.append(minus, n, plus); el.append(em, uc, pr, st); grid.appendChild(el);
+});
+
+function change(id, d){
+  qty[id] = Math.max(0, Math.min(20, qty[id] + d)); buzz();
+  document.getElementById('n' + id).textContent = qty[id];
+  document.getElementById('p' + id).classList.toggle('on', qty[id] > 0);
+  update();
+}
+const pid = document.getElementById('pid'), hint = document.getElementById('hint'), go = document.getElementById('go');
+const idOk = () => /^\d{5,14}$/.test(pid.value.trim());
+function totals(){
+  let t = 0, u = 0; packs.forEach(p => { t += qty[p.id] * p.price; u += qty[p.id] * p.uc; }); return {t, u};
+}
+function update(){
+  const {t, u} = totals();
+  document.getElementById('total').textContent = fmt(t) + ' ' + CUR;
+  document.getElementById('ucs').textContent = u ? '💎 ' + fmt(u) + ' UC в заказе' : 'Выбери пак выше 👆';
+  go.disabled = !(u > 0 && idOk());
+}
+pid.addEventListener('input', () => {
+  pid.value = pid.value.replace(/\D/g, '');
+  const bad = pid.value.length > 0 && !idOk();
+  pid.classList.toggle('err', bad && pid.value.length >= 5);
+  hint.className = 'hint' + (idOk() ? '' : '');
+  hint.textContent = idOk() ? 'ID выглядит верно ✅' : 'UC придут именно на этот ID 🛡';
+  update();
+});
+go.onclick = () => {
+  const items = packs.filter(p => qty[p.id] > 0).map(p => ({id: p.id, qty: qty[p.id]}));
+  if (!items.length || !idOk()) return;
+  const payload = JSON.stringify({items, player_id: pid.value.trim()});
+  if (tg) { tg.sendData(payload); }
+  else { alert('Режим предпросмотра 👀\nВ Telegram заказ уйдёт боту:\n' + payload); }
+};
+update();
+</script>
 </body>
 </html>
+
 
