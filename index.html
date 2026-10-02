@@ -1,1 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UC Shop</title>
+    <!-- Подключаем скрипт Telegram -->
+    <script src="https://telegram.org"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--tg-theme-bg-color, #ffffff);
+            color: var(--tg-theme-text-color, #000000);
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .shop-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .btn {
+            background-color: var(--tg-theme-button-color, #2481cc);
+            color: var(--tg-theme-button-text-color, #ffffff);
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="shop-title">Приветствуем в UC Shop!</div>
+    <p>Это заготовка вашего мини-приложения.</p>
+    <button class="btn" onclick="tg.close()">Закрыть приложение</button>
+
+    <script>
+        // Инициализируем Telegram WebApp
+        let tg = window.Telegram.WebApp;
+        tg.expand(); // Расширяем на весь экран
+    </script>
+</body>
+</html>
 
